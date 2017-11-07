@@ -4,6 +4,7 @@
 const int stepsPerRevolution = 500; 
  
 Ultrasonic ultrasonic(6, 7); //6 -> trigger; 7 -> echo;
+const int pinoIR = 7;
 Stepper myStepper(stepsPerRevolution, 8,10,9,11); 
 
 boolean waitForFirstEvent = true;
@@ -11,20 +12,22 @@ boolean waitForFirstEvent = true;
 void setup() {
   Serial.begin(9600);
   myStepper.setSpeed(60);
+  pinMode(pinoIR, INPUT);
 }
  
 void loop() {
+  delay(50);
   if(waitForFirstEvent) firstEventTrigger();
 }
 
 void firstEventTrigger(){
 
-  long distancia = 7.5;
+  long distancia = 7;
   long distanciaUltrassom = ultrasonic.distanceRead();
 
   Serial.println(distanciaUltrassom);
   
-  if(distanciaUltrassom < distancia && distanciaUltrassom != 0){
+  if(distanciaUltrassom < distancia /*&& distanciaUltrassom != 0*/){
     
     waitForFirstEvent = false;
 
